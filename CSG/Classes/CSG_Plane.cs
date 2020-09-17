@@ -49,7 +49,7 @@ namespace Parabox.CSG
         // `coplanarFront` or `coplanarBack` depending on their orientation with
         // respect to this plane. Polygons in front or in back of this plane go into
         // either `front` or `back`.
-        public void SplitPolygon(CSG_Polygon polygon, List<CSG_Polygon> coplanarFront, List<CSG_Polygon> coplanarBack, List<CSG_Polygon> front, List<CSG_Polygon> back)
+        public void SplitPolygon(CSG_Polygon polygon, List<CSG_Polygon> coplanarFront, List<CSG_Polygon> coplanarBack,ref List<CSG_Polygon> front,ref List<CSG_Polygon> back)
         {
             // Classify each point as well as the entire polygon into one of the above
             // four classes.
