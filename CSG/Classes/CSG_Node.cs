@@ -14,16 +14,15 @@ namespace Parabox.CSG
 
         public CSG_Node()
         {
-            this.front = null;
-            this.back = null;
+            front = null;
+            back = null;
+            polygons = null;
+            plane = null;
         }
 
-        public CSG_Node(List<CSG_Polygon> list)
+        public CSG_Node(List<CSG_Polygon> list):this()
         {
             Build(list);
-
-            // this.front = null;
-            // this.back = null;
         }
 
         public CSG_Node(List<CSG_Polygon> list, CSG_Plane plane, CSG_Node front, CSG_Node back)
@@ -36,9 +35,7 @@ namespace Parabox.CSG
 
         public CSG_Node Clone()
         {
-            CSG_Node clone = new CSG_Node(this.polygons, this.plane, this.front, this.back);
-
-            return clone;
+            return  new CSG_Node(this.polygons, this.plane, this.front, this.back);
         }
 
         // Remove all polygons in this BSP tree that are inside the other BSP tree
@@ -87,42 +84,43 @@ namespace Parabox.CSG
         // (no heuristic is used to pick a good split).
         public void Build(List<CSG_Polygon> list)
         {
-            if (list.Count < 1)
+            if (list == null || list.Count < 1)
                 return;
-
-            if (this.plane == null || !this.plane.Valid())
+            
+            if (plane == null || !plane.Valid())
             {
-                this.plane = new CSG_Plane();
-                this.plane.normal = list[0].plane.normal;
-                this.plane.w = list[0].plane.w;
+                plane = new CSG_Plane
+                {
+                    normal = list[0].plane.normal,
+                    w = list[0].plane.w
+                };
             }
+            
+            if (polygons == null)
+                polygons = new List<CSG_Polygon>();
 
-
-            if (this.polygons == null)
-                this.polygons = new List<CSG_Polygon>();
-
-            List<CSG_Polygon> list_front = new List<CSG_Polygon>();
-            List<CSG_Polygon> list_back = new List<CSG_Polygon>();
-
+            var listFront = new List<CSG_Polygon>();
+            var listBack = new List<CSG_Polygon>();
+            
             for (int i = 0; i < list.Count; i++)
             {
-                this.plane.SplitPolygon(list[i], this.polygons, this.polygons, list_front, list_back);
+                plane.SplitPolygon(list[i], polygons, polygons, listFront, listBack);
             }
 
-            if (list_front.Count > 0)
+            if (listFront.Count > 0)
             {
-                if (this.front == null)
-                    this.front = new CSG_Node();
-
-                this.front.Build(list_front);
+                if (front == null)
+                    front = new CSG_Node();
+                
+                front.Build(listFront);
             }
 
-            if (list_back.Count > 0)
+            if (listBack.Count > 0)
             {
-                if (this.back == null)
-                    this.back = new CSG_Node();
-
-                this.back.Build(list_back);
+                if (back == null)
+                    back = new CSG_Node();
+                
+                back.Build(listBack);
             }
         }
 

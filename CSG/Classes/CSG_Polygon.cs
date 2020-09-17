@@ -29,6 +29,13 @@ namespace Parabox.CSG
             plane.Flip();
         }
 
+        public List<CSG_Vertex> Clone()
+        {
+            var clone = new List<CSG_Vertex>();
+            clone.AddRange(vertices);
+            return clone;
+        }
+
         public override string ToString()
         {
             return "normal: " + plane.normal;

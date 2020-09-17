@@ -222,6 +222,20 @@ namespace Parabox.CSG
 #endif
         }
 
+        public static CSG_Vertex Clone(this CSG_Vertex x)
+        {
+            return new CSG_Vertex()
+            {
+                color = x.color,
+                normal = x.normal,
+                position = x.position,
+                tangent = x.tangent,
+                uv0 = x.uv0,
+                uv2 = x.uv2,
+                uv3 = x.uv3,
+                uv4 = x.uv4
+            };
+        }
         /// <summary>
         /// Linearly interpolate between two vertices.
         /// </summary>

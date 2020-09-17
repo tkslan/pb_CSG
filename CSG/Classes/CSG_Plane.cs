@@ -105,10 +105,9 @@ namespace Parabox.CSG
                         {
                             f.Add(vi);
                         }
-
                         if (ti != EPolygonType.Front)
                         {
-                            b.Add(vi);
+                            b.Add(ti != EPolygonType.Back ? vi.Clone() : vi);
                         }
 
                         if ((ti | tj) == EPolygonType.Spanning)
@@ -118,7 +117,7 @@ namespace Parabox.CSG
                             CSG_Vertex v = CSG_VertexUtility.Mix(vi, vj, t);
 
                             f.Add(v);
-                            b.Add(v);
+                            b.Add(v.Clone());
                         }
                     }
 
