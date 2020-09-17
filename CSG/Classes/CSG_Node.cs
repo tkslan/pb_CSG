@@ -104,7 +104,7 @@ namespace Parabox.CSG
             
             for (int i = 0; i < list.Count; i++)
             {
-                plane.SplitPolygon(list[i], polygons, polygons, listFront, listBack);
+                plane.SplitPolygon(list[i], polygons, polygons, ref listFront, ref listBack);
             }
 
             if (listFront.Count > 0)
@@ -138,7 +138,7 @@ namespace Parabox.CSG
 
             for (int i = 0; i < list.Count; i++)
             {
-                this.plane.SplitPolygon(list[i], list_front, list_back, list_front, list_back);
+                this.plane.SplitPolygon(list[i], list_front, list_back, ref list_front, ref list_back);
             }
 
             if (this.front != null)
