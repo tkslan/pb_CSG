@@ -29,7 +29,7 @@ namespace Parabox.CSG
 
         public CSG_Plane(Vector3 a, Vector3 b, Vector3 c)
         {
-            normal = Vector3.Cross(b - a, c - a);//.normalized;
+            normal = Vector3.Cross(b - a, c - a).normalized;
             w = Vector3.Dot(normal, a);
         }
 
