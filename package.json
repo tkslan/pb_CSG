@@ -1,7 +1,7 @@
 {
   "name": "co.parabox.csg",
   "displayName": "pb_CSG (ToMi)",
-  "version": "1.0.0.1",
+  "version": "1.0.1-tomi",
   "unity": "2018.3",
   "description": "A C# port of CSG.js by Evan W (http://evanw.github.io/csg.js/).",
   "keywords": [],
