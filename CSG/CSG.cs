@@ -25,7 +25,7 @@ namespace Parabox.CSG
     public static class Boolean
     {
         // Tolerance used by `splitPolygon()` to decide if a point is on the plane.
-        internal const float k_Epsilon = 0.002f;
+        internal const float k_Epsilon = 0.01f;
 
         /// <summary>
         /// Returns a new mesh by merging @lhs with @rhs.

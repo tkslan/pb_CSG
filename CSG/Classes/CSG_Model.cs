@@ -69,27 +69,27 @@ namespace Parabox.CSG
             Dictionary<Material, List<int>> submeshes = new Dictionary<Material, List<int>>();
 
             int p = 0;
+			if (list != null)
+				for (int i = 0; i < list.Count; i++)
+				{
+					CSG_Polygon poly = list[i];
+					List<int> indices;
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                CSG_Polygon poly = list[i];
-                List<int> indices;
+					if (!submeshes.TryGetValue(poly.material, out indices))
+						submeshes.Add(poly.material, indices = new List<int>());
 
-                if (!submeshes.TryGetValue(poly.material, out indices))
-                    submeshes.Add(poly.material, indices = new List<int>());
+					for (int j = 0; j < poly.vertices.Count; j++)
+					{
+						vertices.Add(poly.vertices[0]);
+						indices.Add(p++);
 
-                for (int j = 2; j < poly.vertices.Count; j++)
-                {
-                    vertices.Add(poly.vertices[0]);
-                    indices.Add(p++);
+						vertices.Add(poly.vertices[j - 1]);
+						indices.Add(p++);
 
-                    vertices.Add(poly.vertices[j - 1]);
-                    indices.Add(p++);
-
-                    vertices.Add(poly.vertices[j]);
-                    indices.Add(p++);
-                }
-            }
+						vertices.Add(poly.vertices[j]);
+						indices.Add(p++);
+					}
+				}
 
             m_Materials = submeshes.Keys.ToList();
             m_Indices = submeshes.Values.ToList();

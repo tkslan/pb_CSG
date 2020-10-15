@@ -178,8 +178,10 @@ namespace Parabox.CSG
                 list_back = this.back.AllPolygons();
             }
 
-            list.AddRange(list_front);
-            list.AddRange(list_back);
+            if(list_front.Count != 0)
+                list.AddRange(list_front);
+            if(list_back.Count != 0)
+                list.AddRange(list_back);
 
             return list;
         }
