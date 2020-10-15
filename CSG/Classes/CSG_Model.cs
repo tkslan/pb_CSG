@@ -70,6 +70,7 @@ namespace Parabox.CSG
 
             int p = 0;
 			if (list != null)
+			{
 				for (int i = 0; i < list.Count; i++)
 				{
 					CSG_Polygon poly = list[i];
@@ -78,7 +79,7 @@ namespace Parabox.CSG
 					if (!submeshes.TryGetValue(poly.material, out indices))
 						submeshes.Add(poly.material, indices = new List<int>());
 
-					for (int j = 0; j < poly.vertices.Count; j++)
+					for (int j = 2; j < poly.vertices.Count; j++)
 					{
 						vertices.Add(poly.vertices[0]);
 						indices.Add(p++);
@@ -91,8 +92,9 @@ namespace Parabox.CSG
 					}
 				}
 
-            m_Materials = submeshes.Keys.ToList();
-            m_Indices = submeshes.Values.ToList();
+				m_Materials = submeshes.Keys.ToList();
+				m_Indices = submeshes.Values.ToList();
+			}
         }
 
         internal List<CSG_Polygon> ToPolygons()
@@ -126,11 +128,7 @@ namespace Parabox.CSG
             mesh.subMeshCount = model.m_Indices.Count;
             for (int i = 0, c = mesh.subMeshCount; i < c; i++)
             {
-#if UNITY_2019_3_OR_NEWER
                 mesh.SetIndices(model.m_Indices[i], MeshTopology.Triangles, i);
-#else
-                mesh.SetIndices(model.m_Indices[i].ToArray(), MeshTopology.Triangles, i);
-#endif
             }
 
             return mesh;
